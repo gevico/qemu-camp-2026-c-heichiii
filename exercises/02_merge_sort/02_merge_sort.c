@@ -15,7 +15,59 @@ Student temp[MAX_STUDENTS];
 
 void merge_sort(int left, int right) {
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    
+    if((right-left)<=0)
+    return;
+    else if((right-left)==1)
+    {
+        if(students[left].score<students[right].score)
+        {
+            Student tmp=students[left];
+            students[left]=students[right];
+            students[right]=tmp;
+        }
+        return;
+    }
+    int mid=(left+right)/2;
+    merge_sort(left,mid);
+    merge_sort(mid+1,right);
+    Student * sorted = (Student*)malloc(sizeof(Student)*(right-left+1));
+    int index1=left,index2=mid+1;
+    for(int i=0;i<(right-left+1);i++)
+    {
+        if((index1<mid+1) && (index2< right+1))
+        {
+            if(students[index1].score>students[index2].score)
+            {
+                sorted[i]=students[index1];
+                index1++;
+            }
+            else
+            {
+                sorted[i]=students[index2];
+                index2++;
+            }
+        }
+        else if(index1<mid+1)
+        {
+            sorted[i]=students[index1];
+            index1++;
+        }
+        else
+        {
+            sorted[i]=students[index2];
+            index2++;
+        }
+    }
+
+    for(int i=left;i<=right;i++)
+    {
+        students[i]=sorted[i-left];
+    }
+    
+
+
+    
 }
 
 int main(void) {

@@ -11,10 +11,45 @@ typedef struct {
 } Student;
 
 Student students[MAX_STUDENTS];
-
+void swap(int a, int b)
+{
+    Student s1=students[a];
+    students[a]=students[b];
+    students[b]=s1;
+}
 void quick_sort(int left, int right) {
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    if((right-left)<=0)
+    return;
+    Student pivot=students[left];
+    int index;
+    int i=left,j=right;
+    while (j>i) 
+    {
+        while (i<j && students[j].score<=pivot.score)
+        {
+            j--;
+        }
+        while (i<j && students[i].score>pivot.score)
+        {
+            i++;
+        }
+        if(j>i)
+        {
+            swap(i,j);
+            
+        }
+        else
+        {
+            index=j;
+            break;
+        }
+        
+        
+    }
+    swap(left,j);
+    quick_sort(left,index-1);
+    quick_sort(index+1,right);
 }
 
 int main(void) {

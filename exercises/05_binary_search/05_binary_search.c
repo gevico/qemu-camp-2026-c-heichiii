@@ -13,10 +13,59 @@ typedef struct {
 
 Student students[MAX_STUDENTS];
 int n;
+void swap(a,b)
+{
+    Student tmp=students[a];
+    students[a]=students[b];
+    students[b]=tmp;
+}
+void quick_sort(int left,int right)
+{
+    if(left>=right)
+    return;
+    Student pivot=students[left];
+    int i=left,j=right,index;
+    while (i<j)
+    {
+        while (i<j && strcmp(students[i].name,pivot.name)<=0)
+        {
+            i++;
+        }
+        while (i<j && strcmp(students[j].name,pivot.name)>0)
+        {
+            j--;
+        }
 
+        if(i<j)
+        swap(i,j);
+        else
+        {
+            index=i;
+            break;
+        }
+    }
+    swap(left,index);
+
+    quick_sort(left,index-1);
+    quick_sort(index+1,right);
+    
+}
+int bs(const char *target_name,int l,int r)
+{
+    int m=(l+r)/2;
+    int res=strcmp(target_name,students[m].name);
+    if(res==0)
+    return m;
+    if(res>0)
+    return bs(target_name,m+1,r);
+    if(res<0)
+    return bs(target_name,l,m-1);
+}
 int binary_search(const char *target_name) {
     // TODO: 在这里添加你的代码
-    // I AM NOT DONE
+    quick_sort(0,MAX_STUDENTS-1);
+    return bs(target_name,0,MAX_STUDENTS-1);
+
 }
 
 int main(void) {
